@@ -1,0 +1,13 @@
+# binary files
+*.lib
+*.dll
+*.exe
+
+nginx\
+mariadb\
+mariadb-bins
+php\
+www\
+
+changelog.txt
+Wnmp.ini

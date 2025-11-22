@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>QuickServer</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <style type="text/css">
+      <!--
+      html {
+        font-family: sans-serif;
+        margin: 1em 2em;
+      }
+
+      p {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+
+      pre {
+        margin: 0.25em 0em;
+        padding: 0.5em;
+        background-color: #EEE;
+        border: thin solid #CCC;
+      }
+
+      .indented {
+        padding-left: 10pt;
+      }
+      -->
+    </style>
+  </head>
+
+  <body>
+    <h1>QuickServer</h1>
+
+    <p>Welcome to QuickServer!</p>
+
+    <p>
+	  QuickServer is a lightweight and portable Nginx + PHP + MariaDB + PostgreSQL + Redis environment for Windows
+      with a simple yet feature rich control panel to manage them.
+    </p>
+
+    <p>
+      By default, QuickServer installs to <tt>C:\QuickServer</tt>.
+    </p>
+	
+	<p>
+      The default login for MariaDB/MySQL is:
+      <br />
+	  Username: <tt>root</tt>
+	  <br />
+	  Password: <tt>password</tt>
+    </p>
+
+    <h1>Configuration notes</h1>
+    <h4>Default editor</h4>
+    <p>
+      The default editor for QuickServer configuration and log files is 'notepad'. You can set
+      the <tt>Editor</tt> setting by going to <tt>File->QuickServer Options</tt> and clicking
+	  <tt>..</tt> and selecting the location to the editors exe.
+    </p>
+
+    <h4>Start QuickServer with Windows</h4>
+    <p>
+      The default option for starting QuickServer with Windows is disabled. You can set
+      the <tt>Start QuickServer with Windows</tt> setting by going to <tt>File->QuickServer Options</tt> and checking
+	  the check box right next to the <tt>Start QuickServer on start up</tt> label.
+    </p>
+
+    <h4>Start Nginx on launch</h4>
+    <p>
+      The default option for starting nginx when QuickServer starts is disabled. You can set
+      the <tt>Start Nginx on launch</tt> setting by going to <tt>File->QuickServer Options</tt> and checking
+	  the check box right next to the <tt>Start Nginx on launch</tt> label.
+    </p>
+
+    <h4>Start MariaDB on launch</h4>
+    <p>
+      The default option for starting MariaDB when QuickServer starts is disabled. You can set
+      the <tt>Start MariaDB on launch</tt> setting by going to <tt>File->QuickServer Options</tt> and checking
+	  the check box right next to the <tt>Start MariaDB on launch</tt> label.
+    </p>
+
+    <h4>Start PHP on launch</h4>
+    <p>
+      The default option for starting PHP when QuickServer starts is disabled. You can set
+      the <tt>Start PHP on launch</tt> setting by going to <tt>File->QuickServer Options</tt> and checking
+	  the check box right next to the <tt>Start PHP on launch</tt> label.
+    </p>
+	
+	<h4>Minimize QuickServer to tray instead of minimizing</h4>
+    <p>
+      The default option for minimizing QuickServer to the tray when clicking the minimize box is disabled. You can set
+      the <tt>Minimize QuickServer to tray instead of minimizing</tt> setting by going to <tt>File->QuickServer Options</tt> and checking
+	  the check box right next to the <tt>Minimize QuickServer to tray instead of minimizing</tt> label.
+    </p>
+
+	<h4>Minimize QuickServer to tray instead of closing</h4>
+    <p>
+      The default option for minimizing QuickServer to the tray when clicking the X box is disabled. You can set
+      the <tt>Minimize QuickServer to tray instead of closing</tt> setting by going to <tt>File->QuickServer Options</tt> and checking
+	  the check box right next to the <tt>Minimize QuickServer to tray instead of closing</tt> label.
+    </p>
+
+	<h4>Start QuickServer minimized</h4>
+    <p>
+      The default option for starting QuickServer in the minimized state is disabled. You can set
+      the <tt>Start QuickServer minimized</tt> setting by going to <tt>File->QuickServer Options</tt> and checking
+	  the check box right next to the <tt>Start QuickServer minimized</tt> label.
+    </p>
+	
+	<h4>Automatically check for updates</h4>
+    <p>
+      The default option for automatically checking for updates is enabled and to check for updates every week. You can set
+      the <tt>Automatically check for updates</tt> setting by going to <tt>File->QuickServer Options</tt> and checking
+	  the check box right next to the <tt>Automatically check for updates</tt> label and selecting the desired frequency to check
+	  for updates from the combo box.
+    </p>
+
+	<h4>Nginx Version</h4>
+    <p>
+      The default nginx version is the default included with QuickServer, you have to add desired versions of nginx to
+	  <tt>C:\QuickServer\nginx-bins\</tt>, then going to <tt>File->QuickServer Options Nginx</tt> and changing
+	  the value of the combo box right next to the <tt>Nginx Version</tt> label and selecting the desired Nginx
+	  version.
+    </p>
+
+	<h4>MariaDB Version</h4>
+    <p>
+      The default MariaDB version is the default included with QuickServer, you have to add desired versions of MariaDB to
+	  <tt>C:\QuickServer\mariadb-bins\</tt>, then going to <tt>File->QuickServer Options MariaDB</tt> and changing
+	  the value of the combo box right next to the <tt>MariaDB Version</tt> label and selecting the desired MariaDB
+	  version.
+    </p>
+	
+	<h4>PHP Processes</h4>
+    <p>
+      The default number of PHP processes is 2 You can set the <tt>PHP Processes</tt> setting by going to <tt>File->QuickServer Options PHP</tt>
+	  and changing the value of the number box right next to the <tt>PHP Processes</tt> label and inputing the desired number of
+	  PHP processes.
+    </p>
+
+	<h4>PHP Port</h4>
+    <p>
+      The default PHP port is 9001 You can set the <tt>PHP Port</tt> setting by going to <tt>File->QuickServer Options PHP</tt>
+	  and changing the value of the number box right next to the <tt>PHP Port</tt> label and inputing the desired number of
+	  PHP port.
+    </p>
+	
+	<h4>PHP Version</h4>
+    <p>
+      The default PHP version is the default included with QuickServer, you have to add desired versions of PHP to
+	  <tt>C:\QuickServer\php-bins\</tt>, then going to <tt>File->QuickServer Options PHP</tt> and changing
+	  the value of the combo box right next to the <tt>PHP Version</tt> label and selecting the desired PHP
+	  version.
+    </p>
+	
+    <h1>Reporting problems</h1>
+
+    <p>
+      Before you report any problems, please consult the <a
+      href="https://github.com/quickserver/quickserver">QuickServer GitHub</a>
+      and see if your question is already in our list of Frequently
+      Answered Questions</a> (FAQ).
+    </p>
+
+    <p>
+      If you cannot find an answer to your question, please feel free
+      to join the google group, at <a
+      href="https://groups.google.com/forum/#!forum/wnmp-users">https://groups.google.com/forum/#!forum/wnmp-users</a>.
+      <b>Remember</b>, the more useful information you include in your
+      report, the easier it will be for us to help you!
+    </p>
+
+    <h1>Author and copyright information</h1>
+
+    <p>
+      QuickServer is a lightweight and portable development environment for Windows.
+    </p>
+
+    <p>
+      QuickServer is Copyright 2025 QuickServer.
+    </p>
+
+    <p>
+      QuickServer is free software; you can redistribute it and/or
+      modify it under the terms of the <a
+      href="https://opensource.org/licenses/MIT">MIT License</a>.
+    </p>
+
+    <p>
+      QuickServer is distributed in the hope that it will be useful, but
+      <b>without any warranty</b>; without even the implied warranty
+      of <b>merchantability</b> or <b>fitness for a particular
+      purpose</b>. See the MIT License for more details.
+    </p>
+  </body>
+</html>
