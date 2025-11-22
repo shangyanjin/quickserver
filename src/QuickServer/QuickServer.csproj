@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuickServer</RootNamespace>
     <AssemblyName>QuickServer</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -92,6 +92,8 @@
     <Compile Include="QuickServer.Programs\MariaDB.cs" />
     <Compile Include="QuickServer.Programs\Nginx.cs" />
     <Compile Include="QuickServer.Programs\PHP.cs" />
+    <Compile Include="QuickServer.Programs\PostgreSQL.cs" />
+    <Compile Include="QuickServer.Programs\Redis.cs" />
     <Compile Include="QuickServer.Programs\QuickServerProgram.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="QuickServer.UI\AboutFrm.cs">

@@ -4,7 +4,7 @@
 #define MyAppPublisher "QuickServer"
 #define MyAppURL "https://github.com/quickserver/quickserver"
 #define MyAppExeName "QuickServer.exe"
-#define Year "2021"
+#define Year "2025"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -47,6 +47,10 @@ Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:Ad
 
 [Dirs]
 Name: "{app}\nginx-bins\default\logs\"
+Name: "{app}\postgresql\data\"
+Name: "{app}\postgresql\logs\"
+Name: "{app}\redis\data\"
+Name: "{app}\redis\logs\"
 
 [Files]
 Source: contrib\*; DestDir: {app}\contrib; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -65,6 +69,10 @@ Source: nginx-bins\default\www\index.php; DestDir: {app}\nginx-bins\default\www;
 Source: nginx-bins\default\nginx.exe; DestDir: {app}\nginx-bins\default; Flags: ignoreversion
 
 Source: php-bins\default\*; Excludes: ".gitignore"; DestDir: {app}\php-bins\default; Flags: ignoreversion recursesubdirs createallsubdirs
+
+Source: postgresql\*; Excludes: ".gitignore,data"; DestDir: {app}\postgresql; Flags: ignoreversion recursesubdirs createallsubdirs
+
+Source: redis\*; Excludes: ".gitignore,data,logs"; DestDir: {app}\redis; Flags: ignoreversion recursesubdirs createallsubdirs
 
 Source: readme.txt; DestDir: {app}; Flags: ignoreversion
 Source: "VC_redist.x64.exe"; DestDir: {tmp}; Flags: ignoreversion deleteafterinstall

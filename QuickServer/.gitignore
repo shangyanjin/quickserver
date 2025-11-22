@@ -3,11 +3,21 @@
 *.dll
 *.exe
 
+# service directories
 nginx\
 mariadb\
-mariadb-bins
 php\
+postgresql\
+redis\
 www\
 
+# data and log directories
+postgresql\data\
+postgresql\logs\
+redis\data\
+redis\logs\
+mariadb\data\
+
+# configuration files
 changelog.txt
-Wnmp.ini
+QuickServer.ini

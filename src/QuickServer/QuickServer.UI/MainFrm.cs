@@ -23,6 +23,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -47,20 +48,20 @@ namespace QuickServer.UI
         public NginxProgram Nginx;
         public MariaDBProgram MariaDB;
         public PHPProgram PHP;
+        public PostgreSQLProgram PostgreSQL;
+        public RedisProgram Redis;
 
         ContextMenuStrip NginxConfigContextMenuStrip, NginxLogContextMenuStrip;
         ContextMenuStrip MariaDBConfigContextMenuStrip, MariaDBLogContextMenuStrip;
         ContextMenuStrip PHPConfigContextMenuStrip, PHPLogContextMenuStrip;
+        ContextMenuStrip PostgreSQLConfigContextMenuStrip, PostgreSQLLogContextMenuStrip;
+        ContextMenuStrip RedisConfigContextMenuStrip, RedisLogContextMenuStrip;
         private QuickServerUpdater updater;
         private NotifyIcon ni = new NotifyIcon();
         private bool visiblecore = true;
 
-        public void SetupNginx(bool deleteOldLink = false)
+        public void SetupNginx()
         {
-            Misc.CreateRelativeLink(Program.StartupPath + "\\nginx",
-                Program.StartupPath + "\\nginx-bins\\" + Properties.Settings.Default.NginxVersion,
-                Misc.SYMBOLIC_LINK_FLAG.Directory, deleteOldLink);
-
             Nginx = new NginxProgram(Program.StartupPath + "\\nginx\\nginx.exe") {
                 ProgLogSection = Log.LogSection.Nginx,
                 StartArgs = "",
@@ -71,12 +72,8 @@ namespace QuickServer.UI
             };
         }
 
-        public void SetupMariaDB(bool deleteOldLink = false)
+        public void SetupMariaDB()
         {
-            Misc.CreateRelativeLink(Program.StartupPath + "\\mariadb",
-                Program.StartupPath + "\\mariadb-bins\\" + Properties.Settings.Default.MariaDBVersion,
-                Misc.SYMBOLIC_LINK_FLAG.Directory, deleteOldLink);
-
             MariaDB = new MariaDBProgram(Program.StartupPath + "\\mariadb\\bin\\mysqld.exe") {
                 ProgLogSection = Log.LogSection.MariaDB,
                 StartArgs = "--install-manual QuickServer-MariaDB",
@@ -87,12 +84,8 @@ namespace QuickServer.UI
             };
         }
 
-        public void SetupPHP(bool deleteOldLink=false)
+        public void SetupPHP()
         {
-            Misc.CreateRelativeLink(Program.StartupPath + "\\php",
-                Program.StartupPath + "\\php-bins\\" + Properties.Settings.Default.PHPVersion,
-                Misc.SYMBOLIC_LINK_FLAG.Directory, deleteOldLink);
-
             PHP = new PHPProgram(Program.StartupPath + "\\php\\php-cgi.exe") {
                 ProgLogSection = Log.LogSection.PHP,
                 ConfDir = Program.StartupPath + "\\php\\",
@@ -100,6 +93,79 @@ namespace QuickServer.UI
                 WorkingDir = Program.StartupPath + "\\php"
             };
             SetCurlCAPath();
+        }
+
+        public void SetupPostgreSQL()
+        {
+            string pgCtlExe = Program.StartupPath + "\\postgresql\\bin\\pg_ctl.exe";
+            if (!File.Exists(pgCtlExe))
+            {
+                pgCtlExe = Program.StartupPath + "\\postgresql\\bin\\postgres.exe";
+            }
+
+            PostgreSQL = new PostgreSQLProgram(pgCtlExe)
+            {
+                ProgLogSection = Log.LogSection.PostgreSQL,
+                StartArgs = "start -D \"" + Program.StartupPath + "\\postgresql\\data\" -w",
+                StopArgs = "/c sc delete " + PostgreSQLProgram.ServiceName,
+                ConfDir = Program.StartupPath + "\\postgresql\\conf\\",
+                LogDir = Program.StartupPath + "\\postgresql\\data\\log\\",
+                WorkingDir = Program.StartupPath + "\\postgresql"
+            };
+        }
+
+        public void SetupRedis()
+        {
+            Redis = new RedisProgram(Program.StartupPath + "\\redis\\redis-server.exe")
+            {
+                ProgLogSection = Log.LogSection.Redis,
+                StartArgs = Program.StartupPath + "\\redis\\redis.conf",
+                StopArgs = null,
+                ConfDir = Program.StartupPath + "\\redis\\",
+                LogDir = Program.StartupPath + "\\redis\\logs\\",
+                WorkingDir = Program.StartupPath + "\\redis"
+            };
+        }
+
+        private void AddToSystemPath()
+        {
+            try
+            {
+                string currentPath = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Process);
+                var pathsToAdd = new Dictionary<string, string>
+                {
+                    { Program.StartupPath + "\\nginx", "Nginx" },
+                    { Program.StartupPath + "\\mariadb\\bin", "MariaDB" },
+                    { Program.StartupPath + "\\php", "PHP" },
+                    { Program.StartupPath + "\\postgresql\\bin", "PostgreSQL" },
+                    { Program.StartupPath + "\\redis", "Redis" }
+                };
+
+                string newPath = currentPath;
+                bool pathChanged = false;
+
+                foreach (var kvp in pathsToAdd)
+                {
+                    string path = kvp.Key;
+                    string serviceName = kvp.Value;
+                    
+                    if (Directory.Exists(path) && !currentPath.Contains(path))
+                    {
+                        newPath += ";" + path;
+                        pathChanged = true;
+                        Log.Notice("Added " + serviceName + " to PATH", Log.LogSection.QuickServer);
+                    }
+                }
+
+                if (pathChanged)
+                {
+                    Environment.SetEnvironmentVariable("PATH", newPath, EnvironmentVariableTarget.Process);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("AddToSystemPath(): " + ex.Message, Log.LogSection.QuickServer);
+            }
         }
 
         private void SetCurlCAPath()
@@ -171,6 +237,24 @@ namespace QuickServer.UI
                 Misc.OpenFileEditor(PHP.LogDir + e.ClickedItem.ToString());
             };
 
+            PostgreSQLConfigContextMenuStrip = new ContextMenuStrip();
+            PostgreSQLConfigContextMenuStrip.ItemClicked += (s, e) => {
+                Misc.OpenFileEditor(PostgreSQL.ConfDir + e.ClickedItem.ToString());
+            };
+            PostgreSQLLogContextMenuStrip = new ContextMenuStrip();
+            PostgreSQLLogContextMenuStrip.ItemClicked += (s, e) => {
+                Misc.OpenFileEditor(PostgreSQL.LogDir + e.ClickedItem.ToString());
+            };
+
+            RedisConfigContextMenuStrip = new ContextMenuStrip();
+            RedisConfigContextMenuStrip.ItemClicked += (s, e) => {
+                Misc.OpenFileEditor(Redis.ConfDir + e.ClickedItem.ToString());
+            };
+            RedisLogContextMenuStrip = new ContextMenuStrip();
+            RedisLogContextMenuStrip.ItemClicked += (s, e) => {
+                Misc.OpenFileEditor(Redis.LogDir + e.ClickedItem.ToString());
+            };
+
         }
 
         private void CreateQuickServerCertificate()
@@ -217,6 +301,8 @@ namespace QuickServer.UI
             cm.MenuItems.Add(CreateQuickServerProgramMenuItem(Nginx));
             cm.MenuItems.Add(CreateQuickServerProgramMenuItem(MariaDB));
             cm.MenuItems.Add(CreateQuickServerProgramMenuItem(PHP));
+            cm.MenuItems.Add(CreateQuickServerProgramMenuItem(PostgreSQL));
+            cm.MenuItems.Add(CreateQuickServerProgramMenuItem(Redis));
             cm.MenuItems.Add("-");
             MenuItem exit = new MenuItem("Exit");
             exit.Click += (s, e) => { Application.Exit(); };
@@ -258,6 +344,10 @@ namespace QuickServer.UI
             SetupNginx();
             SetupMariaDB();
             SetupPHP();
+            SetupPostgreSQL();
+            SetupRedis();
+            
+            AddToSystemPath();
 
             if (!File.Exists(Program.StartupPath + "\\www"))
             {
@@ -295,6 +385,16 @@ namespace QuickServer.UI
             if (Properties.Settings.Default.StartPHPOnLaunch)
             {
                 PHP.Start();
+            }
+
+            if (Properties.Settings.Default.StartPostgreSQLOnLaunch)
+            {
+                PostgreSQL.Start();
+            }
+
+            if (Properties.Settings.Default.StartRedisOnLaunch)
+            {
+                Redis.Start();
             }
         }
 
@@ -446,6 +546,88 @@ namespace QuickServer.UI
             CtxButton(sender, PHPLogContextMenuStrip);
         }
 
+        private void PostgresqlStartButton_Click(object sender, EventArgs e)
+        {
+            PostgreSQL.Start();
+        }
+
+        private void PostgresqlStopButton_Click(object sender, EventArgs e)
+        {
+            PostgreSQL.Stop();
+        }
+
+        private void PostgresqlRestartButton_Click(object sender, EventArgs e)
+        {
+            PostgreSQL.Restart();
+        }
+
+        private void PostgresqlConfigButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DirFiles(PostgreSQL.ConfDir, "*.conf", PostgreSQLConfigContextMenuStrip);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+            }
+            CtxButton(sender, PostgreSQLConfigContextMenuStrip);
+        }
+
+        private void PostgresqlLogButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DirFiles(PostgreSQL.LogDir, "*.log", PostgreSQLLogContextMenuStrip);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+            }
+            CtxButton(sender, PostgreSQLLogContextMenuStrip);
+        }
+
+        private void RedisStartButton_Click(object sender, EventArgs e)
+        {
+            Redis.Start();
+        }
+
+        private void RedisStopButton_Click(object sender, EventArgs e)
+        {
+            Redis.Stop();
+        }
+
+        private void RedisRestartButton_Click(object sender, EventArgs e)
+        {
+            Redis.Restart();
+        }
+
+        private void RedisConfigButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DirFiles(Redis.ConfDir, "*.conf", RedisConfigContextMenuStrip);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+            }
+            CtxButton(sender, RedisConfigContextMenuStrip);
+        }
+
+        private void RedisLogButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DirFiles(Redis.LogDir, "*.log", RedisLogContextMenuStrip);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+            }
+            CtxButton(sender, RedisLogContextMenuStrip);
+        }
+
         /* */
 
         public void StopAll()
@@ -453,10 +635,14 @@ namespace QuickServer.UI
             Nginx.Stop();
             MariaDB.Stop();
             PHP.Stop();
+            PostgreSQL.Stop();
+            Redis.Stop();
         }
 
         private void StartAllButton_Click(object sender, EventArgs e)
         {
+            Redis.Start();
+            PostgreSQL.Start();
             Nginx.Start();
             MariaDB.Start();
             PHP.Start();
@@ -532,6 +718,8 @@ namespace QuickServer.UI
             SetRunningStatusLabel(nginxrunning, Nginx.IsRunning());
             SetRunningStatusLabel(phprunning, PHP.IsRunning());
             SetRunningStatusLabel(mariadbrunning, MariaDB.IsRunning());
+            SetRunningStatusLabel(postgresqlrunning, PostgreSQL.IsRunning());
+            SetRunningStatusLabel(redisrunning, Redis.IsRunning());
         }
 
         private void LocalhostToolStripMenuItem_Click(object sender, EventArgs e)
@@ -560,6 +748,9 @@ namespace QuickServer.UI
 
         private void MainFrm_Shown(object sender, EventArgs e)
         {
+            // MariaDB setup window is no longer automatically opened on startup
+            // Users can access it via the "Setup MariaDB" menu item if needed
+            /*
             if (!Properties.Settings.Default.MariaDBIsSetup || !Directory.Exists(Program.StartupPath + "\\mariadb\\data"))
             {
                 using (var setupMariaDBFrm = new SetupMariaDB(MariaDB))
@@ -574,6 +765,7 @@ namespace QuickServer.UI
                 }
                 SetupConfigAndLogMenuStrips();
             }
+            */
         }
 
         private void MainFrm_FormClosing(object sender, FormClosingEventArgs e)

@@ -121,17 +121,17 @@ namespace QuickServer.UI
             if (Properties.Settings.Default.NginxVersion != nginxBin.Text)
             {
                 Properties.Settings.Default.NginxVersion = nginxBin.Text;
-                mainForm.SetupNginx(true);
+                mainForm.SetupNginx();
             }
             if (Properties.Settings.Default.MariaDBVersion != mariadbBin.Text)
             {
                 Properties.Settings.Default.MariaDBVersion = mariadbBin.Text;
-                mainForm.SetupMariaDB(true);
+                mainForm.SetupMariaDB();
             }
             if (Properties.Settings.Default.PHPVersion != phpBin.Text)
             {
                 Properties.Settings.Default.PHPVersion = phpBin.Text;
-                mainForm.SetupPHP(true);
+                mainForm.SetupPHP();
             }
             Save_PHPExtOptions();
         }

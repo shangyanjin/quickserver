@@ -35,6 +35,10 @@ A lightweight and portable Nginx + PHP + MariaDB + PostgreSQL + Redis environmen
 - SSL certificates are automatically generated
 - Configuration files can be edited through the control panel
 
+## Changelog
+
+See [CHANGELOG.md](docs/CHANGELOG.md) for a list of changes and version history.
+
 ## License
 
 This project is licensed under the MIT License.

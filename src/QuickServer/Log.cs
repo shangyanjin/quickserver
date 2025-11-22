@@ -41,6 +41,8 @@ namespace QuickServer
             Nginx,
             MariaDB,
             PHP,
+            PostgreSQL,
+            Redis,
         }
 
         public static string LogSectionToString(LogSection logSection)
@@ -54,6 +56,10 @@ namespace QuickServer
                     return "MariaDB";
                 case LogSection.PHP:
                     return "PHP";
+                case LogSection.PostgreSQL:
+                    return "PostgreSQL";
+                case LogSection.Redis:
+                    return "Redis";
                 default:
                     return "";
             }
