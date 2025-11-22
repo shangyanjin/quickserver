@@ -7,13 +7,13 @@
 nginx\
 mariadb\
 php\
-postgresql\
+pgsql\
 redis\
 www\
 
 # data and log directories
-postgresql\data\
-postgresql\logs\
+pgsql\data\
+pgsql\logs\
 redis\data\
 redis\logs\
 mariadb\data\

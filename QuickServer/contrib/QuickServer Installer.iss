@@ -27,8 +27,7 @@ VersionInfoCopyright=Copyright 2025 QuickServer
 VersionInfoCompany=QuickServer
 LicenseFile=..\LICENSE
 InfoBeforeFile=
-InfoAfterFile=contrib\postinstall.txt
-OutputDir=../QuickServerOutput
+OutputDir=../out
 OutputBaseFilename=QuickServer-{#MyAppVersion}
 SetupIconFile=../src/QuickServer/logo.ico
 Compression=lzma2/normal
@@ -46,9 +45,9 @@ Name: english; MessagesFile: compiler:Default.isl
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Dirs]
-Name: "{app}\nginx-bins\default\logs\"
-Name: "{app}\postgresql\data\"
-Name: "{app}\postgresql\logs\"
+Name: "{app}\nginx\default\logs\"
+Name: "{app}\pgsql\data\"
+Name: "{app}\pgsql\logs\"
 Name: "{app}\redis\data\"
 Name: "{app}\redis\logs\"
 
@@ -57,20 +56,20 @@ Source: contrib\*; DestDir: {app}\contrib; Flags: ignoreversion recursesubdirs c
 
 Source: docs\*; DestDir: {app}\docs; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: mariadb-bins\default\bin\*; DestDir: {app}\mariadb-bins\default\bin; Flags: ignoreversion
-Source: mariadb-bins\default\include\*; DestDir: {app}\mariadb-bins\default\include; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: mariadb-bins\default\lib\*; DestDir: {app}\mariadb-bins\default\lib; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: mariadb-bins\default\share\*; DestDir: {app}\mariadb-bins\default\share; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: mariadb\default\bin\*; DestDir: {app}\mariadb\default\bin; Flags: ignoreversion
+Source: mariadb\default\include\*; DestDir: {app}\mariadb\default\include; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: mariadb\default\lib\*; DestDir: {app}\mariadb\default\lib; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: mariadb\default\share\*; DestDir: {app}\mariadb\default\share; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: nginx-bins\default\conf\*; Excludes: "key.pem,cert.pem,.gitignore"; DestDir: {app}\nginx-bins\default\conf; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: nginx-bins\default\temp\*; DestDir: {app}\nginx-bins\default\temp; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: nginx-bins\default\www\phpmyadmin\*; Excludes: ".gitignore"; DestDir: {app}\nginx-bins\default\www\phpmyadmin; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: nginx-bins\default\www\index.php; DestDir: {app}\nginx-bins\default\www; Flags: ignoreversion onlyifdoesntexist
-Source: nginx-bins\default\nginx.exe; DestDir: {app}\nginx-bins\default; Flags: ignoreversion
+Source: nginx\default\conf\*; Excludes: "key.pem,cert.pem,.gitignore"; DestDir: {app}\nginx\default\conf; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: nginx\default\temp\*; DestDir: {app}\nginx\default\temp; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: nginx\default\www\phpmyadmin\*; Excludes: ".gitignore"; DestDir: {app}\nginx\default\www\phpmyadmin; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: nginx\default\www\index.php; DestDir: {app}\nginx\default\www; Flags: ignoreversion onlyifdoesntexist
+Source: nginx\default\nginx.exe; DestDir: {app}\nginx\default; Flags: ignoreversion
 
-Source: php-bins\default\*; Excludes: ".gitignore"; DestDir: {app}\php-bins\default; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: php\default\*; Excludes: ".gitignore"; DestDir: {app}\php\default; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: postgresql\*; Excludes: ".gitignore,data"; DestDir: {app}\postgresql; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: pgsql\*; Excludes: ".gitignore,data"; DestDir: {app}\pgsql; Flags: ignoreversion recursesubdirs createallsubdirs
 
 Source: redis\*; Excludes: ".gitignore,data,logs"; DestDir: {app}\redis; Flags: ignoreversion recursesubdirs createallsubdirs
 
@@ -87,4 +86,4 @@ Name: {commondesktop}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; Tasks: desk
 [Run]
 Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}; Flags: nowait postinstall shellexec
 Filename: "{tmp}\VC_redist.x64.exe"; Parameters: "/install /passive /norestart"
-Filename: iexplore.exe; Parameters: "https://github.com/quickserver/quickserver"; Verb: open; Flags: shellexec runasoriginaluser
+;Filename: iexplore.exe; Parameters: "https://github.com/quickserver/quickserver"; Verb: open; Flags: shellexec runasoriginaluser

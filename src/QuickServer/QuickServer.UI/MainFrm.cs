@@ -97,20 +97,20 @@ namespace QuickServer.UI
 
         public void SetupPostgreSQL()
         {
-            string pgCtlExe = Program.StartupPath + "\\postgresql\\bin\\pg_ctl.exe";
+            string pgCtlExe = Program.StartupPath + "\\pgsql\\bin\\pg_ctl.exe";
             if (!File.Exists(pgCtlExe))
             {
-                pgCtlExe = Program.StartupPath + "\\postgresql\\bin\\postgres.exe";
+                pgCtlExe = Program.StartupPath + "\\pgsql\\bin\\postgres.exe";
             }
 
             PostgreSQL = new PostgreSQLProgram(pgCtlExe)
             {
                 ProgLogSection = Log.LogSection.PostgreSQL,
-                StartArgs = "start -D \"" + Program.StartupPath + "\\postgresql\\data\" -w",
+                StartArgs = "start -D \"" + Program.StartupPath + "\\pgsql\\data\" -w",
                 StopArgs = "/c sc delete " + PostgreSQLProgram.ServiceName,
-                ConfDir = Program.StartupPath + "\\postgresql\\conf\\",
-                LogDir = Program.StartupPath + "\\postgresql\\data\\log\\",
-                WorkingDir = Program.StartupPath + "\\postgresql"
+                ConfDir = Program.StartupPath + "\\pgsql\\conf\\",
+                LogDir = Program.StartupPath + "\\pgsql\\data\\log\\",
+                WorkingDir = Program.StartupPath + "\\pgsql"
             };
         }
 
@@ -137,7 +137,7 @@ namespace QuickServer.UI
                     { Program.StartupPath + "\\nginx", "Nginx" },
                     { Program.StartupPath + "\\mariadb\\bin", "MariaDB" },
                     { Program.StartupPath + "\\php", "PHP" },
-                    { Program.StartupPath + "\\postgresql\\bin", "PostgreSQL" },
+                    { Program.StartupPath + "\\pgsql\\bin", "PostgreSQL" },
                     { Program.StartupPath + "\\redis", "Redis" }
                 };
 

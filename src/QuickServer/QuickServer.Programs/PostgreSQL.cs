@@ -38,8 +38,8 @@ namespace QuickServer.Programs
 
         public PostgreSQLProgram(string exeFile) : base(exeFile)
         {
-            dataDir = Program.StartupPath + "\\postgresql\\data";
-            initdbExe = Program.StartupPath + "\\postgresql\\bin\\initdb.exe";
+            dataDir = Program.StartupPath + "\\pgsql\\data";
+            initdbExe = Program.StartupPath + "\\pgsql\\bin\\initdb.exe";
             
             PostgreSQLController.MachineName = Environment.MachineName;
             PostgreSQLController.ServiceName = ServiceName;
@@ -112,7 +112,7 @@ namespace QuickServer.Programs
 
             try
             {
-                string psqlExe = Program.StartupPath + "\\postgresql\\bin\\psql.exe";
+                string psqlExe = Program.StartupPath + "\\pgsql\\bin\\psql.exe";
                 if (File.Exists(psqlExe))
                 {
                     Process.Start(psqlExe, "-U postgres -d postgres");
@@ -147,7 +147,7 @@ namespace QuickServer.Programs
                 InitializeDatabase();
                 
                 // Try to start using pg_ctl if available, otherwise use service
-                string pgCtlExe = Program.StartupPath + "\\postgresql\\bin\\pg_ctl.exe";
+                string pgCtlExe = Program.StartupPath + "\\pgsql\\bin\\pg_ctl.exe";
                 if (File.Exists(pgCtlExe))
                 {
                     StartProcess(pgCtlExe, StartArgs, WorkingDir);
@@ -172,7 +172,7 @@ namespace QuickServer.Programs
             try
             {
                 // Try to stop using pg_ctl if available
-                string pgCtlExe = Program.StartupPath + "\\postgresql\\bin\\pg_ctl.exe";
+                string pgCtlExe = Program.StartupPath + "\\pgsql\\bin\\pg_ctl.exe";
                 if (File.Exists(pgCtlExe))
                 {
                     string stopArgs = "stop -D \"" + dataDir + "\" -m fast";
