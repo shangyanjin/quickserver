@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="StartWithWindows" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="AutoCheckForUpdates" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="UpdateFrequency" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">7</Value>
@@ -18,13 +18,13 @@
       <Value Profile="(Default)">notepad.exe</Value>
     </Setting>
     <Setting Name="MinimizeInsteadOfClosing" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="MinimizeToTray" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="StartMinimizedToTray" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="StartNginxOnLaunch" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

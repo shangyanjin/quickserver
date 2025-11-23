@@ -178,18 +178,74 @@ namespace QuickServer.Programs
                     string stopArgs = "stop -D \"" + dataDir + "\" -m fast";
                     StartProcess(pgCtlExe, stopArgs, WorkingDir, true);
                     Log.Notice("Stopped", ProgLogSection);
+                    return;
+                }
+
+                // Fallback to service method - check if service exists first
+                if (ServiceExists())
+                {
+                    try
+                    {
+                        PostgreSQLController.Refresh();
+                        if (PostgreSQLController.Status == ServiceControllerStatus.Running)
+                        {
+                            PostgreSQLController.Stop();
+                        }
+                        RemoveService();
+                        Log.Notice("Stopped", ProgLogSection);
+                    }
+            catch (Exception)
+            {
+                // If service control fails, try to kill process
+                Log.Notice("Service control failed, attempting to stop process", ProgLogSection);
+                KillPostgresProcesses();
+            }
                 }
                 else
                 {
-                    // Fallback to service method
-                    PostgreSQLController.Stop();
-                    RemoveService();
-                    Log.Notice("Stopped", ProgLogSection);
+                    // No service exists, try to kill process directly
+                    KillPostgresProcesses();
                 }
             }
             catch (Exception ex)
             {
-                Log.Error("Stop(): " + ex.Message, ProgLogSection);
+                // Last resort: try to kill process
+                try
+                {
+                    KillPostgresProcesses();
+                }
+                catch
+                {
+                    Log.Error("Stop(): " + ex.Message, ProgLogSection);
+                }
+            }
+        }
+
+        private void KillPostgresProcesses()
+        {
+            try
+            {
+                var procs = Process.GetProcessesByName("postgres");
+                if (procs.Length > 0)
+                {
+                    foreach (var proc in procs)
+                    {
+                        try
+                        {
+                            proc.Kill();
+                        }
+                        catch { }
+                    }
+                    Log.Notice("Stopped PostgreSQL processes", ProgLogSection);
+                }
+                else
+                {
+                    Log.Notice("PostgreSQL is not running", ProgLogSection);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("KillPostgresProcesses(): " + ex.Message, ProgLogSection);
             }
         }
 
@@ -197,18 +253,29 @@ namespace QuickServer.Programs
         {
             try
             {
-                // Check if postgres process is running
-                var procs = Process.GetProcessesByName("postgres");
-                if (procs.Length > 0)
-                    return true;
+                // First check service status (similar to MariaDB)
+                if (ServiceExists())
+                {
+                    PostgreSQLController.Refresh();
+                    return PostgreSQLController.Status == ServiceControllerStatus.Running;
+                }
 
-                // Also check service status
-                PostgreSQLController.Refresh();
-                return PostgreSQLController.Status == ServiceControllerStatus.Running;
+                // If no service, check if postgres process is running (for pg_ctl method)
+                var procs = Process.GetProcessesByName("postgres");
+                return procs.Length > 0;
             }
             catch (Exception)
             {
-                return false;
+                // Fallback: check process if service check fails
+                try
+                {
+                    var procs = Process.GetProcessesByName("postgres");
+                    return procs.Length > 0;
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
     }

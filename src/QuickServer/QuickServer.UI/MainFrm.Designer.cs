@@ -31,13 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrm));
             this.QuickServerMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.quickServerOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hostToIPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getHTTPHeadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.localhostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setupMariaDBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportBugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,8 +45,9 @@
             this.websiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.donateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.localhostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.setupMariaDBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.quickServerDirButton = new System.Windows.Forms.Button();
             this.logRichTextBox = new System.Windows.Forms.RichTextBox();
             this.applicationsGroupBox = new System.Windows.Forms.GroupBox();
@@ -91,6 +92,7 @@
             this.startAllButton = new System.Windows.Forms.Button();
             this.stopAllButton = new System.Windows.Forms.Button();
             this.openMariaDBShellButton = new System.Windows.Forms.Button();
+            this.openPostgreSQLShellButton = new System.Windows.Forms.Button();
             this.AppsRunningTimer = new System.Windows.Forms.Timer(this.components);
             this.QuickServerMenuStrip.SuspendLayout();
             this.applicationsGroupBox.SuspendLayout();
@@ -102,10 +104,9 @@
             this.QuickServerMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.QuickServerMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.toolsToolStripMenuItem,
-            this.helpToolStripMenuItem,
-            this.localhostToolStripMenuItem,
-            this.setupMariaDBToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.setupMariaDBToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.QuickServerMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.QuickServerMenuStrip.Name = "QuickServerMenuStrip";
             this.QuickServerMenuStrip.Size = new System.Drawing.Size(1042, 34);
@@ -114,20 +115,13 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.quickServerOptionsToolStripMenuItem,
-            this.checkForUpdatesToolStripMenuItem,
-            this.toolStripSeparator1,
+            this.toolsToolStripMenuItem,
+            this.localhostToolStripMenuItem,
+            this.toolStripSeparator3,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(56, 28);
             this.fileToolStripMenuItem.Text = "&File";
-            // 
-            // quickServerOptionsToolStripMenuItem
-            // 
-            this.quickServerOptionsToolStripMenuItem.Name = "quickServerOptionsToolStripMenuItem";
-            this.quickServerOptionsToolStripMenuItem.Size = new System.Drawing.Size(287, 34);
-            this.quickServerOptionsToolStripMenuItem.Text = "QuickServer Options";
-            this.quickServerOptionsToolStripMenuItem.Click += new System.EventHandler(this.QuickServerOptionsToolStripMenuItem_Click);
             // 
             // checkForUpdatesToolStripMenuItem
             // 
@@ -147,6 +141,13 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(287, 34);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(95, 28);
+            this.optionsToolStripMenuItem.Text = "&Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.OptionsToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem
             // 
@@ -203,6 +204,11 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(283, 6);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(284, 6);
+            // 
             // websiteToolStripMenuItem
             // 
             this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
@@ -240,7 +246,7 @@
             // 
             // quickServerDirButton
             // 
-            this.quickServerDirButton.Location = new System.Drawing.Point(835, 232);
+            this.quickServerDirButton.Location = new System.Drawing.Point(835, 297);
             this.quickServerDirButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.quickServerDirButton.Name = "quickServerDirButton";
             this.quickServerDirButton.Size = new System.Drawing.Size(142, 55);
@@ -764,11 +770,22 @@
             this.openMariaDBShellButton.Location = new System.Drawing.Point(835, 159);
             this.openMariaDBShellButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.openMariaDBShellButton.Name = "openMariaDBShellButton";
-            this.openMariaDBShellButton.Size = new System.Drawing.Size(142, 68);
+            this.openMariaDBShellButton.Size = new System.Drawing.Size(142, 61);
             this.openMariaDBShellButton.TabIndex = 64;
             this.openMariaDBShellButton.Text = "Open MariaDB Shell";
             this.openMariaDBShellButton.UseVisualStyleBackColor = true;
             this.openMariaDBShellButton.Click += new System.EventHandler(this.OpenMariaDBShellButton_Click);
+            // 
+            // openPostgreSQLShellButton
+            // 
+            this.openPostgreSQLShellButton.Location = new System.Drawing.Point(835, 228);
+            this.openPostgreSQLShellButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.openPostgreSQLShellButton.Name = "openPostgreSQLShellButton";
+            this.openPostgreSQLShellButton.Size = new System.Drawing.Size(142, 61);
+            this.openPostgreSQLShellButton.TabIndex = 65;
+            this.openPostgreSQLShellButton.Text = "Open PostgreSQL Shell";
+            this.openPostgreSQLShellButton.UseVisualStyleBackColor = true;
+            this.openPostgreSQLShellButton.Click += new System.EventHandler(this.OpenPostgreSQLShellButton_Click);
             // 
             // AppsRunningTimer
             // 
@@ -787,6 +804,7 @@
             this.Controls.Add(this.startAllButton);
             this.Controls.Add(this.stopAllButton);
             this.Controls.Add(this.openMariaDBShellButton);
+            this.Controls.Add(this.openPostgreSQLShellButton);
             this.Controls.Add(this.QuickServerMenuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.QuickServerMenuStrip;
@@ -822,10 +840,11 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ToolStripMenuItem quickServerOptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem localhostToolStripMenuItem;
@@ -849,6 +868,7 @@
         private System.Windows.Forms.Button startAllButton;
         private System.Windows.Forms.Button stopAllButton;
         private System.Windows.Forms.Button openMariaDBShellButton;
+        private System.Windows.Forms.Button openPostgreSQLShellButton;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label phprunning;

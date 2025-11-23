@@ -103,13 +103,31 @@ namespace QuickServer.UI
                 pgCtlExe = Program.StartupPath + "\\pgsql\\bin\\postgres.exe";
             }
 
+            string confDir = Program.StartupPath + "\\pgsql\\conf\\";
+            string logDir = Program.StartupPath + "\\pgsql\\logs\\";
+            string dataDir = Program.StartupPath + "\\pgsql\\data";
+
+            // Create directories if they don't exist
+            if (!Directory.Exists(confDir))
+            {
+                Directory.CreateDirectory(confDir);
+            }
+            if (!Directory.Exists(logDir))
+            {
+                Directory.CreateDirectory(logDir);
+            }
+            if (!Directory.Exists(dataDir))
+            {
+                Directory.CreateDirectory(dataDir);
+            }
+
             PostgreSQL = new PostgreSQLProgram(pgCtlExe)
             {
                 ProgLogSection = Log.LogSection.PostgreSQL,
-                StartArgs = "start -D \"" + Program.StartupPath + "\\pgsql\\data\" -w",
+                StartArgs = "start -D \"" + dataDir + "\" -w",
                 StopArgs = "/c sc delete " + PostgreSQLProgram.ServiceName,
-                ConfDir = Program.StartupPath + "\\pgsql\\conf\\",
-                LogDir = Program.StartupPath + "\\pgsql\\data\\log\\",
+                ConfDir = confDir,
+                LogDir = logDir,
                 WorkingDir = Program.StartupPath + "\\pgsql"
             };
         }
@@ -402,15 +420,18 @@ namespace QuickServer.UI
 
         /* File */
 
-        private void QuickServerOptionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var optionForm = new OptionsFrm(this);
-            optionForm.ShowDialog(this);
-        }
-
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void OptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var optionsFrm = new OptionsFrm(this))
+            {
+                optionsFrm.StartPosition = FormStartPosition.CenterParent;
+                optionsFrm.ShowDialog(this);
+            }
         }
 
         /* Applications Group Box */
@@ -426,46 +447,64 @@ namespace QuickServer.UI
         private void NginxStartButton_Click(object sender, EventArgs e)
         {
             Nginx.Start();
+            System.Threading.Thread.Sleep(500);
+            SetRunningStatusLabel(nginxrunning, Nginx.IsRunning());
         }
 
         private void MariadbStartButton_Click(object sender, EventArgs e)
         {
             MariaDB.Start();
+            System.Threading.Thread.Sleep(500);
+            SetRunningStatusLabel(mariadbrunning, MariaDB.IsRunning());
         }
 
         private void PhpStartButton_Click(object sender, EventArgs e)
         {
             PHP.Start();
+            System.Threading.Thread.Sleep(500);
+            SetRunningStatusLabel(phprunning, PHP.IsRunning());
         }
 
         private void NginxStopButton_Click(object sender, EventArgs e)
         {
             Nginx.Stop();
+            System.Threading.Thread.Sleep(500);
+            SetRunningStatusLabel(nginxrunning, Nginx.IsRunning());
         }
 
         private void MariadbStopButton_Click(object sender, EventArgs e)
         {
             MariaDB.Stop();
+            System.Threading.Thread.Sleep(500);
+            SetRunningStatusLabel(mariadbrunning, MariaDB.IsRunning());
         }
 
         private void PhpStopButton_Click(object sender, EventArgs e)
         {
             PHP.Stop();
+            System.Threading.Thread.Sleep(500);
+            SetRunningStatusLabel(phprunning, PHP.IsRunning());
         }
 
         private void NginxRestartButton_Click(object sender, EventArgs e)
         {
             Nginx.Restart();
+            System.Threading.Thread.Sleep(1000);
+            SetRunningStatusLabel(nginxrunning, Nginx.IsRunning());
         }
 
         private void MariadbRestartButton_Click(object sender, EventArgs e)
         {
             MariaDB.Restart();
+            System.Threading.Thread.Sleep(1000);
+            SetRunningStatusLabel(mariadbrunning, MariaDB.IsRunning());
         }
 
         private void PhpRestartButton_Click(object sender, EventArgs e)
         {
             PHP.Restart();
+            System.Threading.Thread.Sleep(1000);
+            SetRunningStatusLabel(phprunning, PHP.IsRunning());
         }
 
         private void NginxConfigButton_Click(object sender, EventArgs e)
@@ -549,16 +588,22 @@ namespace QuickServer.UI
         private void PostgresqlStartButton_Click(object sender, EventArgs e)
         {
             PostgreSQL.Start();
+            System.Threading.Thread.Sleep(500);
+            SetRunningStatusLabel(postgresqlrunning, PostgreSQL.IsRunning());
         }
 
         private void PostgresqlStopButton_Click(object sender, EventArgs e)
         {
             PostgreSQL.Stop();
+            System.Threading.Thread.Sleep(500);
+            SetRunningStatusLabel(postgresqlrunning, PostgreSQL.IsRunning());
         }
 
         private void PostgresqlRestartButton_Click(object sender, EventArgs e)
         {
             PostgreSQL.Restart();
+            System.Threading.Thread.Sleep(1000);
+            SetRunningStatusLabel(postgresqlrunning, PostgreSQL.IsRunning());
         }
 
         private void PostgresqlConfigButton_Click(object sender, EventArgs e)
@@ -590,16 +635,22 @@ namespace QuickServer.UI
         private void RedisStartButton_Click(object sender, EventArgs e)
         {
             Redis.Start();
+            System.Threading.Thread.Sleep(500);
+            SetRunningStatusLabel(redisrunning, Redis.IsRunning());
         }
 
         private void RedisStopButton_Click(object sender, EventArgs e)
         {
             Redis.Stop();
+            System.Threading.Thread.Sleep(500);
+            SetRunningStatusLabel(redisrunning, Redis.IsRunning());
         }
 
         private void RedisRestartButton_Click(object sender, EventArgs e)
         {
             Redis.Restart();
+            System.Threading.Thread.Sleep(1000);
+            SetRunningStatusLabel(redisrunning, Redis.IsRunning());
         }
 
         private void RedisConfigButton_Click(object sender, EventArgs e)
@@ -646,11 +697,24 @@ namespace QuickServer.UI
             Nginx.Start();
             MariaDB.Start();
             PHP.Start();
+            System.Threading.Thread.Sleep(1500);
+            UpdateAllStatusLabels();
         }
 
         private void StopAllButton_Click(object sender, EventArgs e)
         {
             StopAll();
+            System.Threading.Thread.Sleep(1000);
+            UpdateAllStatusLabels();
+        }
+
+        private void UpdateAllStatusLabels()
+        {
+            SetRunningStatusLabel(nginxrunning, Nginx.IsRunning());
+            SetRunningStatusLabel(phprunning, PHP.IsRunning());
+            SetRunningStatusLabel(mariadbrunning, MariaDB.IsRunning());
+            SetRunningStatusLabel(postgresqlrunning, PostgreSQL.IsRunning());
+            SetRunningStatusLabel(redisrunning, Redis.IsRunning());
         }
 
         private void CheckForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -705,7 +769,7 @@ namespace QuickServer.UI
         private void SetRunningStatusLabel(Label label, bool running)
         {
             if (running) {
-                label.Text = "?";
+                label.Text = "✓";
                 label.ForeColor = Color.Green;
             } else {
                 label.Text = "X";
@@ -732,6 +796,11 @@ namespace QuickServer.UI
             MariaDB.OpenShell();
         }
 
+        private void OpenPostgreSQLShellButton_Click(object sender, EventArgs e)
+        {
+            PostgreSQL.OpenShell();
+        }
+
         private void setupMariaDBToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var setupMariaDBFrm = new SetupMariaDB(MariaDB))
@@ -748,9 +817,6 @@ namespace QuickServer.UI
 
         private void MainFrm_Shown(object sender, EventArgs e)
         {
-            // MariaDB setup window is no longer automatically opened on startup
-            // Users can access it via the "Setup MariaDB" menu item if needed
-            /*
             if (!Properties.Settings.Default.MariaDBIsSetup || !Directory.Exists(Program.StartupPath + "\\mariadb\\data"))
             {
                 using (var setupMariaDBFrm = new SetupMariaDB(MariaDB))
@@ -765,7 +831,6 @@ namespace QuickServer.UI
                 }
                 SetupConfigAndLogMenuStrips();
             }
-            */
         }
 
         private void MainFrm_FormClosing(object sender, FormClosingEventArgs e)

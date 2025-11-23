@@ -44,9 +44,14 @@ namespace QuickServer.Configuration
         private string IniFilePath;
         private string[] TmpIniFile;
 
-        public void LoadPHPExtensions(string phpBinPath)
+        public void LoadPHPExtensions(string phpBinPath = "default")
         {
-            IniFilePath = Program.StartupPath + "\\php-bins\\" + phpBinPath + "\\php.ini";
+            IniFilePath = Program.StartupPath + "\\php\\php.ini";
+            if (!File.Exists(IniFilePath))
+            {
+                PHPExtensions = new List<PHPExtension>();
+                return;
+            }
             TmpIniFile = File.ReadAllLines(IniFilePath);
             PHPExtensions = new List<PHPExtension>();
 

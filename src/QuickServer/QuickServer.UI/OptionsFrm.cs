@@ -67,6 +67,8 @@ namespace QuickServer.UI
             StartNginxLaunchCB.Checked = Properties.Settings.Default.StartNginxOnLaunch;
             StartMySQLLaunchCB.Checked = Properties.Settings.Default.StartMariaDBOnLaunch;
             StartPHPLaunchCB.Checked = Properties.Settings.Default.StartPHPOnLaunch;
+            StartPostgreSQLLaunchCB.Checked = Properties.Settings.Default.StartPostgreSQLOnLaunch;
+            StartRedisLaunchCB.Checked = Properties.Settings.Default.StartRedisOnLaunch;
             StartMinimizedToTray.Checked = Properties.Settings.Default.StartMinimizedToTray;
             MinimizeQuickServerToTray.Checked = Properties.Settings.Default.MinimizeToTray;
             autoUpdateCheckBox.Checked = Properties.Settings.Default.AutoCheckForUpdates;
@@ -74,20 +76,23 @@ namespace QuickServer.UI
             PHP_PROCESSES.Value = Properties.Settings.Default.PHPProcessCount;
             PHP_PORT.Value = Properties.Settings.Default.PHPPort;
             MinimizeToTrayInsteadOfClosing.Checked = Properties.Settings.Default.MinimizeInsteadOfClosing;
-            foreach (var str in GetNginxVersions())
-            {
-                nginxBin.Items.Add(str);
-            }
-            foreach (var str in GetMariaDBVersions())
-            {
-                mariadbBin.Items.Add(str);
-            }
-            foreach (var str in GetPHPVersions()) {
-                phpBin.Items.Add(str);
-            }
-            nginxBin.SelectedIndex = nginxBin.Items.IndexOf(Properties.Settings.Default.NginxVersion);
-            mariadbBin.SelectedIndex = mariadbBin.Items.IndexOf(Properties.Settings.Default.MariaDBVersion);
-            phpBin.SelectedIndex = phpBin.Items.IndexOf(Properties.Settings.Default.PHPVersion);
+            
+            // Load PHP extensions
+            PHPConfigurationMgr.LoadPHPExtensions("default");
+            foreach (var ext in PHPConfigurationMgr.PHPExtensions)
+                phpExtListBox.Items.Add(ext.Name, ext.Enabled);
+            
+            // Load Nginx configuration
+            LoadNginxConfig();
+            
+            // Load MariaDB configuration
+            LoadMariaDBConfig();
+            
+            // Load PostgreSQL configuration
+            LoadPostgreSQLConfig();
+            
+            // Load Redis configuration
+            LoadRedisConfig();
         }
 
         private void Options_Load(object sender, EventArgs e)
@@ -102,6 +107,8 @@ namespace QuickServer.UI
             Properties.Settings.Default.StartNginxOnLaunch = StartNginxLaunchCB.Checked;
             Properties.Settings.Default.StartMariaDBOnLaunch = StartMySQLLaunchCB.Checked;
             Properties.Settings.Default.StartPHPOnLaunch = StartPHPLaunchCB.Checked;
+            Properties.Settings.Default.StartPostgreSQLOnLaunch = StartPostgreSQLLaunchCB.Checked;
+            Properties.Settings.Default.StartRedisOnLaunch = StartRedisLaunchCB.Checked;
             Properties.Settings.Default.StartMinimizedToTray = StartMinimizedToTray.Checked;
             Properties.Settings.Default.MinimizeToTray = MinimizeQuickServerToTray.Checked;
             Properties.Settings.Default.MinimizeInsteadOfClosing = MinimizeToTrayInsteadOfClosing.Checked;
@@ -117,21 +124,6 @@ namespace QuickServer.UI
             catch (Exception ex)
             {
                 Log.Error(ex.Message);
-            }
-            if (Properties.Settings.Default.NginxVersion != nginxBin.Text)
-            {
-                Properties.Settings.Default.NginxVersion = nginxBin.Text;
-                mainForm.SetupNginx();
-            }
-            if (Properties.Settings.Default.MariaDBVersion != mariadbBin.Text)
-            {
-                Properties.Settings.Default.MariaDBVersion = mariadbBin.Text;
-                mainForm.SetupMariaDB();
-            }
-            if (Properties.Settings.Default.PHPVersion != phpBin.Text)
-            {
-                Properties.Settings.Default.PHPVersion = phpBin.Text;
-                mainForm.SetupPHP();
             }
             Save_PHPExtOptions();
         }
@@ -178,25 +170,76 @@ namespace QuickServer.UI
             SetEditor();
         }
 
-        private string[] GetNginxVersions()
+
+        private void LoadNginxConfig()
         {
-            if (Directory.Exists(Program.StartupPath + "\\nginx-bins") == false)
-                return new string[0];
-            return Directory.GetDirectories(Program.StartupPath + "\\nginx-bins").Select(d => new DirectoryInfo(d).Name).ToArray();
+            try
+            {
+                string configPath = Program.StartupPath + "\\nginx\\conf\\nginx.conf";
+                if (File.Exists(configPath))
+                {
+                    nginxConfigTextBox.Text = File.ReadAllText(configPath);
+                    nginxPortNumericUpDown.Value = 80;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error loading nginx config: " + ex.Message);
+            }
         }
 
-        private string[] GetMariaDBVersions()
+        private void LoadMariaDBConfig()
         {
-            if (Directory.Exists(Program.StartupPath + "\\mariadb-bins") == false)
-                return new string[0];
-            return Directory.GetDirectories(Program.StartupPath + "\\mariadb-bins").Select(d => new DirectoryInfo(d).Name).ToArray();
+            try
+            {
+                string configPath = Program.StartupPath + "\\mariadb\\data\\my.ini";
+                if (!File.Exists(configPath))
+                    configPath = Program.StartupPath + "\\mariadb\\data\\my.cnf";
+                    
+                if (File.Exists(configPath))
+                {
+                    mysqlConfigTextBox.Text = File.ReadAllText(configPath);
+                    mysqlPortNumericUpDown.Value = 3306;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error loading mariadb config: " + ex.Message);
+            }
         }
 
-        private string[] GetPHPVersions()
+        private void LoadPostgreSQLConfig()
         {
-            if (Directory.Exists(Program.StartupPath + "\\php-bins") == false)
-                return new string[0];
-            return Directory.GetDirectories(Program.StartupPath + "\\php-bins").Select(d => new DirectoryInfo(d).Name).ToArray();
+            try
+            {
+                string configPath = Program.StartupPath + "\\pgsql\\conf\\postgresql.conf";
+                if (File.Exists(configPath))
+                {
+                    pgsqlConfigTextBox.Text = File.ReadAllText(configPath);
+                    pgsqlPortNumericUpDown.Value = 5432;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error loading postgresql config: " + ex.Message);
+            }
+        }
+
+        private void LoadRedisConfig()
+        {
+            try
+            {
+                string configPath = Program.StartupPath + "\\redis\\redis.conf";
+                if (File.Exists(configPath))
+                {
+                    redisConfigTextBox.Text = File.ReadAllText(configPath);
+                    redisPortNumericUpDown.Value = 6379;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error loading redis config: " + ex.Message);
+            }
         }
 
         private void UpdateNgxPHPConfig()
@@ -236,13 +279,5 @@ namespace QuickServer.UI
             PHPConfigurationMgr.SavePHPIniOptions();
         }
 
-        private void PhpBin_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            phpExtListBox.Items.Clear();
-            PHPConfigurationMgr.LoadPHPExtensions(phpBin.Text);
-
-            foreach (var ext in PHPConfigurationMgr.PHPExtensions)
-                phpExtListBox.Items.Add(ext.Name, ext.Enabled);
-        }
     }
 }

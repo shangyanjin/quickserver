@@ -77,7 +77,7 @@ namespace QuickServer.Programs
 
             try
             {
-                Process.Start(Program.StartupPath + "/mariadb/bin/mysql.exe", "-u root -p");
+                Process.Start(Program.StartupPath + "\\mariadb\\bin\\mysql.exe", "-u root -p");
                 Log.Notice("Started MariaDB shell", ProgLogSection);
             }
             catch (Exception ex)
@@ -99,22 +99,103 @@ namespace QuickServer.Programs
 
         public override void Stop()
         {
-            try {
-                MariaDBController.Stop();
-                RemoveService();
-                Log.Notice("Stopped", ProgLogSection);
-            } catch (Exception ex) {
-                Log.Error("Stop():" + ex.Message, ProgLogSection);
+            try
+            {
+                // Check if service exists first
+                if (ServiceExists())
+                {
+                    try
+                    {
+                        MariaDBController.Refresh();
+                        if (MariaDBController.Status == ServiceControllerStatus.Running)
+                        {
+                            MariaDBController.Stop();
+                        }
+                        RemoveService();
+                        Log.Notice("Stopped", ProgLogSection);
+                    }
+                    catch (Exception)
+                    {
+                        // If service control fails, try to kill process
+                        Log.Notice("Service control failed, attempting to stop process", ProgLogSection);
+                        KillMysqldProcesses();
+                    }
+                }
+                else
+                {
+                    // No service exists, try to kill process directly
+                    KillMysqldProcesses();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Last resort: try to kill process
+                try
+                {
+                    KillMysqldProcesses();
+                }
+                catch
+                {
+                    Log.Error("Stop(): " + ex.Message, ProgLogSection);
+                }
+            }
+        }
+
+        private void KillMysqldProcesses()
+        {
+            try
+            {
+                var procs = Process.GetProcessesByName("mysqld");
+                if (procs.Length > 0)
+                {
+                    foreach (var proc in procs)
+                    {
+                        try
+                        {
+                            proc.Kill();
+                        }
+                        catch { }
+                    }
+                    Log.Notice("Stopped MariaDB processes", ProgLogSection);
+                }
+                else
+                {
+                    Log.Notice("MariaDB is not running", ProgLogSection);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("KillMysqldProcesses(): " + ex.Message, ProgLogSection);
             }
         }
 
         public override bool IsRunning()
         {
-            try {
-                MariaDBController.Refresh();
-                return MariaDBController.Status == ServiceControllerStatus.Running;
-            } catch (Exception) {
-                return false;
+            try
+            {
+                // First check service status
+                if (ServiceExists())
+                {
+                    MariaDBController.Refresh();
+                    return MariaDBController.Status == ServiceControllerStatus.Running;
+                }
+
+                // If no service, check if mysqld process is running
+                var procs = Process.GetProcessesByName("mysqld");
+                return procs.Length > 0;
+            }
+            catch (Exception)
+            {
+                // Fallback: check process if service check fails
+                try
+                {
+                    var procs = Process.GetProcessesByName("mysqld");
+                    return procs.Length > 0;
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
     }

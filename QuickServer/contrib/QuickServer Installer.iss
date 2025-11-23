@@ -45,7 +45,7 @@ Name: english; MessagesFile: compiler:Default.isl
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Dirs]
-Name: "{app}\nginx\default\logs\"
+Name: "{app}\nginx\logs\"
 Name: "{app}\pgsql\data\"
 Name: "{app}\pgsql\logs\"
 Name: "{app}\redis\data\"
@@ -56,18 +56,18 @@ Source: contrib\*; DestDir: {app}\contrib; Flags: ignoreversion recursesubdirs c
 
 Source: docs\*; DestDir: {app}\docs; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: mariadb\default\bin\*; DestDir: {app}\mariadb\default\bin; Flags: ignoreversion
-Source: mariadb\default\include\*; DestDir: {app}\mariadb\default\include; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: mariadb\default\lib\*; DestDir: {app}\mariadb\default\lib; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: mariadb\default\share\*; DestDir: {app}\mariadb\default\share; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: mariadb\bin\*; DestDir: {app}\mariadb\bin; Flags: ignoreversion
+Source: mariadb\include\*; DestDir: {app}\mariadb\include; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: mariadb\lib\*; DestDir: {app}\mariadb\lib; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: mariadb\share\*; DestDir: {app}\mariadb\share; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: nginx\default\conf\*; Excludes: "key.pem,cert.pem,.gitignore"; DestDir: {app}\nginx\default\conf; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: nginx\default\temp\*; DestDir: {app}\nginx\default\temp; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: nginx\default\www\phpmyadmin\*; Excludes: ".gitignore"; DestDir: {app}\nginx\default\www\phpmyadmin; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: nginx\default\www\index.php; DestDir: {app}\nginx\default\www; Flags: ignoreversion onlyifdoesntexist
-Source: nginx\default\nginx.exe; DestDir: {app}\nginx\default; Flags: ignoreversion
+Source: nginx\conf\*; Excludes: "key.pem,cert.pem,.gitignore"; DestDir: {app}\nginx\conf; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: nginx\temp\*; DestDir: {app}\nginx\temp; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: nginx\www\phpmyadmin\*; Excludes: ".gitignore"; DestDir: {app}\nginx\www\phpmyadmin; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: nginx\www\index.php; DestDir: {app}\nginx\www; Flags: ignoreversion onlyifdoesntexist
+Source: nginx\nginx.exe; DestDir: {app}\nginx; Flags: ignoreversion
 
-Source: php\default\*; Excludes: ".gitignore"; DestDir: {app}\php\default; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: php\*; Excludes: ".gitignore"; DestDir: {app}\php; Flags: ignoreversion recursesubdirs createallsubdirs
 
 Source: pgsql\*; Excludes: ".gitignore,data"; DestDir: {app}\pgsql; Flags: ignoreversion recursesubdirs createallsubdirs
 

@@ -88,7 +88,7 @@ namespace QuickServer.Updater
         /// </summary>
         private void DoBackUp()
         {
-            string[] files = { "\\php\\php.ini", "\\conf\\nginx.conf", "\\mariadb\\my.ini" };
+            string[] files = { "\\php\\php.ini", "\\nginx\\conf\\nginx.conf", "\\mariadb\\data\\my.ini" };
             foreach (string f in files) {
                 string file = Program.StartupPath + f;
                 if (File.Exists(file)) {

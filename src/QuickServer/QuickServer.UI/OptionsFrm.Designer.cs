@@ -46,6 +46,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.StartPHPLaunchCB = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.StartPostgreSQLLaunchCB = new System.Windows.Forms.CheckBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.StartRedisLaunchCB = new System.Windows.Forms.CheckBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.StartQuickServerWithWindows = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.autoUpdateCheckBox = new System.Windows.Forms.CheckBox();
@@ -57,21 +61,35 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.phpExtListBox = new System.Windows.Forms.CheckedListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.phpBin = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.PHP_PROCESSES = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.PHP_PORT = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.Save = new System.Windows.Forms.Button();
             this.Nginx = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.nginxConfigTextBox = new System.Windows.Forms.TextBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.nginxPortNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.labelNginxPort = new System.Windows.Forms.Label();
             this.MariaDB = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.nginxBin = new System.Windows.Forms.ComboBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.mariadbBin = new System.Windows.Forms.ComboBox();
-            this.label15 = new System.Windows.Forms.Label();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.mysqlConfigTextBox = new System.Windows.Forms.TextBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.mysqlPortNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.labelMysqlPort = new System.Windows.Forms.Label();
+            this.PostgreSQL = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.pgsqlConfigTextBox = new System.Windows.Forms.TextBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.pgsqlPortNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.labelPgsqlPort = new System.Windows.Forms.Label();
+            this.Redis = new System.Windows.Forms.TabPage();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.redisConfigTextBox = new System.Windows.Forms.TextBox();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.redisPortNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.labelRedisPort = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
             this.applicationSettingsGroupBox.SuspendLayout();
@@ -82,14 +100,26 @@
             ((System.ComponentModel.ISupportInitialize)(this.PHP_PROCESSES)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PHP_PORT)).BeginInit();
             this.Nginx.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nginxPortNumericUpDown)).BeginInit();
             this.MariaDB.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mysqlPortNumericUpDown)).BeginInit();
+            this.PostgreSQL.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pgsqlPortNumericUpDown)).BeginInit();
+            this.Redis.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            this.groupBox12.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.redisPortNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // Cancel
             // 
-            this.Cancel.Location = new System.Drawing.Point(275, 346);
+            this.Cancel.Location = new System.Drawing.Point(275, 386);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(75, 23);
             this.Cancel.TabIndex = 20;
@@ -102,6 +132,8 @@
             this.tabControl1.Controls.Add(this.General);
             this.tabControl1.Controls.Add(this.Nginx);
             this.tabControl1.Controls.Add(this.MariaDB);
+            this.tabControl1.Controls.Add(this.PostgreSQL);
+            this.tabControl1.Controls.Add(this.Redis);
             this.tabControl1.Controls.Add(this.PHP);
             this.tabControl1.Location = new System.Drawing.Point(7, 12);
             this.tabControl1.Name = "tabControl1";
@@ -136,6 +168,10 @@
             this.applicationSettingsGroupBox.Controls.Add(this.label1);
             this.applicationSettingsGroupBox.Controls.Add(this.StartPHPLaunchCB);
             this.applicationSettingsGroupBox.Controls.Add(this.label3);
+            this.applicationSettingsGroupBox.Controls.Add(this.StartPostgreSQLLaunchCB);
+            this.applicationSettingsGroupBox.Controls.Add(this.label16);
+            this.applicationSettingsGroupBox.Controls.Add(this.StartRedisLaunchCB);
+            this.applicationSettingsGroupBox.Controls.Add(this.label17);
             this.applicationSettingsGroupBox.Controls.Add(this.StartQuickServerWithWindows);
             this.applicationSettingsGroupBox.Controls.Add(this.label2);
             this.applicationSettingsGroupBox.Controls.Add(this.autoUpdateCheckBox);
@@ -145,7 +181,7 @@
             this.applicationSettingsGroupBox.Controls.Add(this.label4);
             this.applicationSettingsGroupBox.Location = new System.Drawing.Point(6, 6);
             this.applicationSettingsGroupBox.Name = "applicationSettingsGroupBox";
-            this.applicationSettingsGroupBox.Size = new System.Drawing.Size(327, 240);
+            this.applicationSettingsGroupBox.Size = new System.Drawing.Size(327, 280);
             this.applicationSettingsGroupBox.TabIndex = 16;
             this.applicationSettingsGroupBox.TabStop = false;
             this.applicationSettingsGroupBox.Text = "Application Settings";
@@ -153,7 +189,7 @@
             // StartMinimizedToTray
             // 
             this.StartMinimizedToTray.AutoSize = true;
-            this.StartMinimizedToTray.Location = new System.Drawing.Point(15, 169);
+            this.StartMinimizedToTray.Location = new System.Drawing.Point(15, 209);
             this.StartMinimizedToTray.Name = "StartMinimizedToTray";
             this.StartMinimizedToTray.Size = new System.Drawing.Size(15, 14);
             this.StartMinimizedToTray.TabIndex = 24;
@@ -162,7 +198,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(32, 170);
+            this.label13.Location = new System.Drawing.Point(32, 210);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(111, 13);
             this.label13.TabIndex = 23;
@@ -171,7 +207,7 @@
             // MinimizeToTrayInsteadOfClosing
             // 
             this.MinimizeToTrayInsteadOfClosing.AutoSize = true;
-            this.MinimizeToTrayInsteadOfClosing.Location = new System.Drawing.Point(15, 149);
+            this.MinimizeToTrayInsteadOfClosing.Location = new System.Drawing.Point(15, 189);
             this.MinimizeToTrayInsteadOfClosing.Name = "MinimizeToTrayInsteadOfClosing";
             this.MinimizeToTrayInsteadOfClosing.Size = new System.Drawing.Size(15, 14);
             this.MinimizeToTrayInsteadOfClosing.TabIndex = 22;
@@ -180,7 +216,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(32, 150);
+            this.label12.Location = new System.Drawing.Point(32, 190);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(164, 13);
             this.label12.TabIndex = 21;
@@ -234,7 +270,7 @@
             // 
             // updateCheckIntervalNumericUpDown
             // 
-            this.updateCheckIntervalNumericUpDown.Location = new System.Drawing.Point(191, 208);
+            this.updateCheckIntervalNumericUpDown.Location = new System.Drawing.Point(191, 248);
             this.updateCheckIntervalNumericUpDown.Maximum = new decimal(new int[] {
             365,
             0,
@@ -252,7 +288,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(32, 210);
+            this.label6.Location = new System.Drawing.Point(32, 250);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(154, 13);
             this.label6.TabIndex = 12;
@@ -285,6 +321,42 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Start PHP on launch";
             // 
+            // StartPostgreSQLLaunchCB
+            // 
+            this.StartPostgreSQLLaunchCB.AutoSize = true;
+            this.StartPostgreSQLLaunchCB.Location = new System.Drawing.Point(15, 129);
+            this.StartPostgreSQLLaunchCB.Name = "StartPostgreSQLLaunchCB";
+            this.StartPostgreSQLLaunchCB.Size = new System.Drawing.Size(15, 14);
+            this.StartPostgreSQLLaunchCB.TabIndex = 25;
+            this.StartPostgreSQLLaunchCB.UseVisualStyleBackColor = true;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(32, 130);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(146, 13);
+            this.label16.TabIndex = 24;
+            this.label16.Text = "Start PostgreSQL on launch";
+            // 
+            // StartRedisLaunchCB
+            // 
+            this.StartRedisLaunchCB.AutoSize = true;
+            this.StartRedisLaunchCB.Location = new System.Drawing.Point(15, 149);
+            this.StartRedisLaunchCB.Name = "StartRedisLaunchCB";
+            this.StartRedisLaunchCB.Size = new System.Drawing.Size(15, 14);
+            this.StartRedisLaunchCB.TabIndex = 27;
+            this.StartRedisLaunchCB.UseVisualStyleBackColor = true;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(32, 150);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(109, 13);
+            this.label17.TabIndex = 26;
+            this.label17.Text = "Start Redis on launch";
+            // 
             // StartQuickServerWithWindows
             // 
             this.StartQuickServerWithWindows.AutoSize = true;
@@ -306,7 +378,7 @@
             // autoUpdateCheckBox
             // 
             this.autoUpdateCheckBox.AutoSize = true;
-            this.autoUpdateCheckBox.Location = new System.Drawing.Point(15, 189);
+            this.autoUpdateCheckBox.Location = new System.Drawing.Point(15, 229);
             this.autoUpdateCheckBox.Name = "autoUpdateCheckBox";
             this.autoUpdateCheckBox.Size = new System.Drawing.Size(15, 14);
             this.autoUpdateCheckBox.TabIndex = 11;
@@ -315,7 +387,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(32, 190);
+            this.label5.Location = new System.Drawing.Point(32, 230);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(158, 13);
             this.label5.TabIndex = 10;
@@ -332,7 +404,7 @@
             // MinimizeQuickServerToTray
             // 
             this.MinimizeQuickServerToTray.AutoSize = true;
-            this.MinimizeQuickServerToTray.Location = new System.Drawing.Point(15, 129);
+            this.MinimizeQuickServerToTray.Location = new System.Drawing.Point(15, 169);
             this.MinimizeQuickServerToTray.Name = "MinimizeQuickServerToTray";
             this.MinimizeQuickServerToTray.Size = new System.Drawing.Size(15, 14);
             this.MinimizeQuickServerToTray.TabIndex = 9;
@@ -341,7 +413,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(32, 130);
+            this.label4.Location = new System.Drawing.Point(32, 170);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(178, 13);
             this.label4.TabIndex = 8;
@@ -380,40 +452,20 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.phpBin);
-            this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.PHP_PROCESSES);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.PHP_PORT);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Location = new System.Drawing.Point(6, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(327, 110);
+            this.groupBox2.Size = new System.Drawing.Size(327, 80);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "PHP Settings";
             // 
-            // phpBin
-            // 
-            this.phpBin.FormattingEnabled = true;
-            this.phpBin.Location = new System.Drawing.Point(108, 78);
-            this.phpBin.Name = "phpBin";
-            this.phpBin.Size = new System.Drawing.Size(69, 21);
-            this.phpBin.TabIndex = 5;
-            this.phpBin.SelectedIndexChanged += new System.EventHandler(this.PhpBin_SelectedIndexChanged);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(18, 81);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(70, 13);
-            this.label9.TabIndex = 4;
-            this.label9.Text = "PHP Version:";
-            // 
             // PHP_PROCESSES
             // 
-            this.PHP_PROCESSES.Location = new System.Drawing.Point(108, 25);
+            this.PHP_PROCESSES.Location = new System.Drawing.Point(108, 19);
             this.PHP_PROCESSES.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -436,7 +488,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 27);
+            this.label8.Location = new System.Drawing.Point(18, 21);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(84, 13);
             this.label8.TabIndex = 2;
@@ -444,7 +496,7 @@
             // 
             // PHP_PORT
             // 
-            this.PHP_PORT.Location = new System.Drawing.Point(108, 50);
+            this.PHP_PORT.Location = new System.Drawing.Point(108, 44);
             this.PHP_PORT.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -462,7 +514,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(18, 52);
+            this.label7.Location = new System.Drawing.Point(18, 46);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(54, 13);
             this.label7.TabIndex = 0;
@@ -470,7 +522,7 @@
             // 
             // Save
             // 
-            this.Save.Location = new System.Drawing.Point(183, 346);
+            this.Save.Location = new System.Drawing.Point(183, 386);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(75, 23);
             this.Save.TabIndex = 18;
@@ -480,7 +532,8 @@
             // 
             // Nginx
             // 
-            this.Nginx.Controls.Add(this.groupBox1);
+            this.Nginx.Controls.Add(this.groupBox5);
+            this.Nginx.Controls.Add(this.groupBox6);
             this.Nginx.Location = new System.Drawing.Point(4, 22);
             this.Nginx.Name = "Nginx";
             this.Nginx.Padding = new System.Windows.Forms.Padding(3);
@@ -489,9 +542,74 @@
             this.Nginx.Text = "Nginx";
             this.Nginx.UseVisualStyleBackColor = true;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.nginxConfigTextBox);
+            this.groupBox5.Location = new System.Drawing.Point(6, 80);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(327, 216);
+            this.groupBox5.TabIndex = 2;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Nginx Configuration";
+            // 
+            // nginxConfigTextBox
+            // 
+            this.nginxConfigTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nginxConfigTextBox.Font = new System.Drawing.Font("Courier New", 9F);
+            this.nginxConfigTextBox.Location = new System.Drawing.Point(3, 16);
+            this.nginxConfigTextBox.Multiline = true;
+            this.nginxConfigTextBox.Name = "nginxConfigTextBox";
+            this.nginxConfigTextBox.ReadOnly = true;
+            this.nginxConfigTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.nginxConfigTextBox.Size = new System.Drawing.Size(321, 197);
+            this.nginxConfigTextBox.TabIndex = 0;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.nginxPortNumericUpDown);
+            this.groupBox6.Controls.Add(this.labelNginxPort);
+            this.groupBox6.Location = new System.Drawing.Point(6, 6);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(327, 68);
+            this.groupBox6.TabIndex = 1;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Nginx Settings";
+            // 
+            // nginxPortNumericUpDown
+            // 
+            this.nginxPortNumericUpDown.Location = new System.Drawing.Point(108, 28);
+            this.nginxPortNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nginxPortNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nginxPortNumericUpDown.Name = "nginxPortNumericUpDown";
+            this.nginxPortNumericUpDown.Size = new System.Drawing.Size(69, 20);
+            this.nginxPortNumericUpDown.TabIndex = 1;
+            this.nginxPortNumericUpDown.Value = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            // 
+            // labelNginxPort
+            // 
+            this.labelNginxPort.AutoSize = true;
+            this.labelNginxPort.Location = new System.Drawing.Point(18, 30);
+            this.labelNginxPort.Name = "labelNginxPort";
+            this.labelNginxPort.Size = new System.Drawing.Size(73, 13);
+            this.labelNginxPort.TabIndex = 0;
+            this.labelNginxPort.Text = "Nginx Port:";
+            // 
             // MariaDB
             // 
-            this.MariaDB.Controls.Add(this.groupBox4);
+            this.MariaDB.Controls.Add(this.groupBox7);
+            this.MariaDB.Controls.Add(this.groupBox8);
             this.MariaDB.Location = new System.Drawing.Point(4, 22);
             this.MariaDB.Name = "MariaDB";
             this.MariaDB.Size = new System.Drawing.Size(339, 302);
@@ -499,67 +617,225 @@
             this.MariaDB.Text = "MariaDB";
             this.MariaDB.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // groupBox7
             // 
-            this.groupBox1.Controls.Add(this.nginxBin);
-            this.groupBox1.Controls.Add(this.label14);
-            this.groupBox1.Location = new System.Drawing.Point(6, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(327, 60);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Nginx Settings";
+            this.groupBox7.Controls.Add(this.mysqlConfigTextBox);
+            this.groupBox7.Location = new System.Drawing.Point(6, 80);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(327, 216);
+            this.groupBox7.TabIndex = 2;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "MariaDB Configuration";
             // 
-            // nginxBin
+            // mysqlConfigTextBox
             // 
-            this.nginxBin.FormattingEnabled = true;
-            this.nginxBin.Location = new System.Drawing.Point(93, 24);
-            this.nginxBin.Name = "nginxBin";
-            this.nginxBin.Size = new System.Drawing.Size(69, 21);
-            this.nginxBin.TabIndex = 5;
+            this.mysqlConfigTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mysqlConfigTextBox.Font = new System.Drawing.Font("Courier New", 9F);
+            this.mysqlConfigTextBox.Location = new System.Drawing.Point(3, 16);
+            this.mysqlConfigTextBox.Multiline = true;
+            this.mysqlConfigTextBox.Name = "mysqlConfigTextBox";
+            this.mysqlConfigTextBox.ReadOnly = true;
+            this.mysqlConfigTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.mysqlConfigTextBox.Size = new System.Drawing.Size(321, 197);
+            this.mysqlConfigTextBox.TabIndex = 0;
             // 
-            // label14
+            // groupBox8
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(18, 27);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(75, 13);
-            this.label14.TabIndex = 4;
-            this.label14.Text = "Nginx Version:";
+            this.groupBox8.Controls.Add(this.mysqlPortNumericUpDown);
+            this.groupBox8.Controls.Add(this.labelMysqlPort);
+            this.groupBox8.Location = new System.Drawing.Point(6, 6);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(327, 68);
+            this.groupBox8.TabIndex = 1;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "MariaDB Settings";
             // 
-            // groupBox4
+            // mysqlPortNumericUpDown
             // 
-            this.groupBox4.Controls.Add(this.mariadbBin);
-            this.groupBox4.Controls.Add(this.label15);
-            this.groupBox4.Location = new System.Drawing.Point(6, 6);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(327, 60);
-            this.groupBox4.TabIndex = 3;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "MariaDB Settings";
+            this.mysqlPortNumericUpDown.Location = new System.Drawing.Point(108, 28);
+            this.mysqlPortNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.mysqlPortNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.mysqlPortNumericUpDown.Name = "mysqlPortNumericUpDown";
+            this.mysqlPortNumericUpDown.Size = new System.Drawing.Size(69, 20);
+            this.mysqlPortNumericUpDown.TabIndex = 1;
+            this.mysqlPortNumericUpDown.Value = new decimal(new int[] {
+            3306,
+            0,
+            0,
+            0});
             // 
-            // mariadbBin
+            // labelMysqlPort
             // 
-            this.mariadbBin.FormattingEnabled = true;
-            this.mariadbBin.Location = new System.Drawing.Point(107, 24);
-            this.mariadbBin.Name = "mariadbBin";
-            this.mariadbBin.Size = new System.Drawing.Size(69, 21);
-            this.mariadbBin.TabIndex = 5;
+            this.labelMysqlPort.AutoSize = true;
+            this.labelMysqlPort.Location = new System.Drawing.Point(18, 30);
+            this.labelMysqlPort.Name = "labelMysqlPort";
+            this.labelMysqlPort.Size = new System.Drawing.Size(80, 13);
+            this.labelMysqlPort.TabIndex = 0;
+            this.labelMysqlPort.Text = "MariaDB Port:";
             // 
-            // label15
+            // PostgreSQL
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(18, 27);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(89, 13);
-            this.label15.TabIndex = 4;
-            this.label15.Text = "MariaDB Version:";
+            this.PostgreSQL.Controls.Add(this.groupBox9);
+            this.PostgreSQL.Controls.Add(this.groupBox10);
+            this.PostgreSQL.Location = new System.Drawing.Point(4, 22);
+            this.PostgreSQL.Name = "PostgreSQL";
+            this.PostgreSQL.Size = new System.Drawing.Size(339, 302);
+            this.PostgreSQL.TabIndex = 4;
+            this.PostgreSQL.Text = "PostgreSQL";
+            this.PostgreSQL.UseVisualStyleBackColor = true;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.pgsqlConfigTextBox);
+            this.groupBox9.Location = new System.Drawing.Point(6, 80);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(327, 216);
+            this.groupBox9.TabIndex = 2;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "PostgreSQL Configuration";
+            // 
+            // pgsqlConfigTextBox
+            // 
+            this.pgsqlConfigTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgsqlConfigTextBox.Font = new System.Drawing.Font("Courier New", 9F);
+            this.pgsqlConfigTextBox.Location = new System.Drawing.Point(3, 16);
+            this.pgsqlConfigTextBox.Multiline = true;
+            this.pgsqlConfigTextBox.Name = "pgsqlConfigTextBox";
+            this.pgsqlConfigTextBox.ReadOnly = true;
+            this.pgsqlConfigTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.pgsqlConfigTextBox.Size = new System.Drawing.Size(321, 197);
+            this.pgsqlConfigTextBox.TabIndex = 0;
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.pgsqlPortNumericUpDown);
+            this.groupBox10.Controls.Add(this.labelPgsqlPort);
+            this.groupBox10.Location = new System.Drawing.Point(6, 6);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(327, 68);
+            this.groupBox10.TabIndex = 1;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "PostgreSQL Settings";
+            // 
+            // pgsqlPortNumericUpDown
+            // 
+            this.pgsqlPortNumericUpDown.Location = new System.Drawing.Point(108, 28);
+            this.pgsqlPortNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.pgsqlPortNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.pgsqlPortNumericUpDown.Name = "pgsqlPortNumericUpDown";
+            this.pgsqlPortNumericUpDown.Size = new System.Drawing.Size(69, 20);
+            this.pgsqlPortNumericUpDown.TabIndex = 1;
+            this.pgsqlPortNumericUpDown.Value = new decimal(new int[] {
+            5432,
+            0,
+            0,
+            0});
+            // 
+            // labelPgsqlPort
+            // 
+            this.labelPgsqlPort.AutoSize = true;
+            this.labelPgsqlPort.Location = new System.Drawing.Point(18, 30);
+            this.labelPgsqlPort.Name = "labelPgsqlPort";
+            this.labelPgsqlPort.Size = new System.Drawing.Size(85, 13);
+            this.labelPgsqlPort.TabIndex = 0;
+            this.labelPgsqlPort.Text = "PostgreSQL Port:";
+            // 
+            // Redis
+            // 
+            this.Redis.Controls.Add(this.groupBox11);
+            this.Redis.Controls.Add(this.groupBox12);
+            this.Redis.Location = new System.Drawing.Point(4, 22);
+            this.Redis.Name = "Redis";
+            this.Redis.Size = new System.Drawing.Size(339, 302);
+            this.Redis.TabIndex = 5;
+            this.Redis.Text = "Redis";
+            this.Redis.UseVisualStyleBackColor = true;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.redisConfigTextBox);
+            this.groupBox11.Location = new System.Drawing.Point(6, 80);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(327, 216);
+            this.groupBox11.TabIndex = 2;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Redis Configuration";
+            // 
+            // redisConfigTextBox
+            // 
+            this.redisConfigTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.redisConfigTextBox.Font = new System.Drawing.Font("Courier New", 9F);
+            this.redisConfigTextBox.Location = new System.Drawing.Point(3, 16);
+            this.redisConfigTextBox.Multiline = true;
+            this.redisConfigTextBox.Name = "redisConfigTextBox";
+            this.redisConfigTextBox.ReadOnly = true;
+            this.redisConfigTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.redisConfigTextBox.Size = new System.Drawing.Size(321, 197);
+            this.redisConfigTextBox.TabIndex = 0;
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.redisPortNumericUpDown);
+            this.groupBox12.Controls.Add(this.labelRedisPort);
+            this.groupBox12.Location = new System.Drawing.Point(6, 6);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(327, 68);
+            this.groupBox12.TabIndex = 1;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "Redis Settings";
+            // 
+            // redisPortNumericUpDown
+            // 
+            this.redisPortNumericUpDown.Location = new System.Drawing.Point(108, 28);
+            this.redisPortNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.redisPortNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.redisPortNumericUpDown.Name = "redisPortNumericUpDown";
+            this.redisPortNumericUpDown.Size = new System.Drawing.Size(69, 20);
+            this.redisPortNumericUpDown.TabIndex = 1;
+            this.redisPortNumericUpDown.Value = new decimal(new int[] {
+            6379,
+            0,
+            0,
+            0});
+            // 
+            // labelRedisPort
+            // 
+            this.labelRedisPort.AutoSize = true;
+            this.labelRedisPort.Location = new System.Drawing.Point(18, 30);
+            this.labelRedisPort.Name = "labelRedisPort";
+            this.labelRedisPort.Size = new System.Drawing.Size(70, 13);
+            this.labelRedisPort.TabIndex = 0;
+            this.labelRedisPort.Text = "Redis Port:";
             // 
             // OptionsFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(360, 381);
+            this.ClientSize = new System.Drawing.Size(360, 421);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.Save);
@@ -581,11 +857,29 @@
             ((System.ComponentModel.ISupportInitialize)(this.PHP_PROCESSES)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PHP_PORT)).EndInit();
             this.Nginx.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nginxPortNumericUpDown)).EndInit();
             this.MariaDB.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mysqlPortNumericUpDown)).EndInit();
+            this.PostgreSQL.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pgsqlPortNumericUpDown)).EndInit();
+            this.Redis.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox12.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.redisPortNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -610,6 +904,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox StartPHPLaunchCB;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox StartPostgreSQLLaunchCB;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.CheckBox StartRedisLaunchCB;
+        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.CheckBox StartQuickServerWithWindows;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox autoUpdateCheckBox;
@@ -621,20 +919,34 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckedListBox phpExtListBox;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox phpBin;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown PHP_PROCESSES;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown PHP_PORT;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button Save;
         private System.Windows.Forms.TabPage Nginx;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox nginxBin;
-        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox nginxConfigTextBox;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.NumericUpDown nginxPortNumericUpDown;
+        private System.Windows.Forms.Label labelNginxPort;
         private System.Windows.Forms.TabPage MariaDB;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.ComboBox mariadbBin;
-        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.TextBox mysqlConfigTextBox;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.NumericUpDown mysqlPortNumericUpDown;
+        private System.Windows.Forms.Label labelMysqlPort;
+        private System.Windows.Forms.TabPage PostgreSQL;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.TextBox pgsqlConfigTextBox;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.NumericUpDown pgsqlPortNumericUpDown;
+        private System.Windows.Forms.Label labelPgsqlPort;
+        private System.Windows.Forms.TabPage Redis;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.TextBox redisConfigTextBox;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private System.Windows.Forms.NumericUpDown redisPortNumericUpDown;
+        private System.Windows.Forms.Label labelRedisPort;
     }
 }
